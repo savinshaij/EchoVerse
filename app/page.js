@@ -71,8 +71,8 @@ export default function Home() {
     formData.append("file", file);
     setPosts([newPost, ...posts]);
     try {
-     
-const {audioPath}= convertVideoToAudio(formData);
+
+      const { audioPath } = convertVideoToAudio(formData);
       // Now send the audio file for transcription
       const transcriptionFormData = new FormData();
       transcriptionFormData.append("file", file);
@@ -143,27 +143,27 @@ const {audioPath}= convertVideoToAudio(formData);
   const convertVideoToAudio = async (videoFile) => {
     const ffmpeg = createFFmpeg({ log: true });
     await ffmpeg.load();
-  
+
     ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
     await ffmpeg.run('-i', 'input.mp4', 'output.mp3');
-  
+
     const data = ffmpeg.FS('readFile', 'output.mp3');
     return new Blob([data.buffer], { type: 'audio/mpeg' });
   };
   return (
     <div className="h-screen">
-      <div className="flex  flex-col h-full md:flex-row ">
+      <div className="flex  flex-col  md:h-full md:flex-row ">
         {/* Left Section */}
         <div className="w-full h-full  md:w-1/3 bg-[#c6ecd0] border border-stone-950  flex flex-col items-center p-6 pt-10 space-y-6 ">
-        <div className="w-full flex justify-end items-center md:hidden">
-        <button
+          <div className="w-full flex justify-end items-center md:hidden">
+            <button
               onClick={handleLogout}
               className="font-bold border-2 border-black hover:text-white text-black py-2 px-4 rounded-md hover:bg-[#181918] transition"
             >
               LogOut
             </button>
-        </div>
-       
+          </div>
+
           {/* Enhanced Profile Card */}
           <div className="bg-white border-2 border-[#181918] w-full max-w-sm rounded-xl shadow-lg p-6 text-gray-800">
             <div className="flex items-center space-x-4">
@@ -186,7 +186,7 @@ const {audioPath}= convertVideoToAudio(formData);
               </p>
             </div>
           </div>
-  
+
           {/* Add Post Card */}
           <div className="bg-white border-2 shadow-lg border-black w-full max-w-sm rounded-lg p-6">
             <h2 className="text-2xl font-bold text-[#181918] mb-4">Add Post</h2>
@@ -251,9 +251,8 @@ const {audioPath}= convertVideoToAudio(formData);
                   <input
                     type="file"
                     id="postFile"
-                    className={`w-full h-10 text-sm text-gray-600 cursor-pointer border-2 border-gray-300 rounded-md opacity-0 absolute top-0 left-0 ${
-                      fileSelected ? "bg-green-100" : ""
-                    }`}
+                    className={`w-full h-10 text-sm text-gray-600 cursor-pointer border-2 border-gray-300 rounded-md opacity-0 absolute top-0 left-0 ${fileSelected ? "bg-green-100" : ""
+                      }`}
                     accept="video/*"
                     required
                     onChange={handleFileChange}
@@ -284,23 +283,23 @@ const {audioPath}= convertVideoToAudio(formData);
             </form>
           </div>
         </div>
-  
+
         {/* Right Section */}
-        <div className="w-full md:w-2/3 bg-[#dee9e1] flex flex-col justify-start items-center p-6 overflow-y-auto">
-          <div className="w-full px-7 mb-6 flex justify-between items-center">
-            <div  className=" md:flex hidden"/>
+        <div className="w-full h-full md:w-2/3 bg-[#dee9e1] flex flex-col justify-start items-center p-6 overflow-y-auto">
+          <div className="w-full px-7  mb-6 flex justify-between items-center">
+            <div className=" md:flex hidden" />
             <h1 className="text-3xl font-bold text-gray-800 ">Posts</h1>
             <div className="md:flex hidden">
-            <button
-              onClick={handleLogout}
-              className="font-bold border-2  border-black hover:text-white text-black py-2 px-4 rounded-md hover:bg-[#181918] transition"
-            >
-              LogOut
-            </button>
+              <button
+                onClick={handleLogout}
+                className="font-bold border-2  border-black hover:text-white text-black py-2 px-4 rounded-md hover:bg-[#181918] transition"
+              >
+                LogOut
+              </button>
             </div>
-           
+
           </div>
-  
+
           <div className="w-full flex flex-col justify-center items-center space-y-6">
             {/* Display the posts dynamically */}
             {posts.length > 0 ? (
@@ -334,7 +333,7 @@ const {audioPath}= convertVideoToAudio(formData);
                             {post.productData.title}
                           </h3>
                           <p className="text-gray-700">
-                          ₹ {post.productData.price}
+                            ₹ {post.productData.price}
                           </p>
                           <a
                             href={post.productData.link}
@@ -371,7 +370,7 @@ const {audioPath}= convertVideoToAudio(formData);
       </div>
     </div>
   );
-  
+
 }
 
 
