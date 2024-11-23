@@ -152,7 +152,7 @@ const {audioPath}= convertVideoToAudio(formData);
   };
   return (
     <div className="h-screen">
-      <div className="flex  h-full md:flex-row ">
+      <div className="flex  flex-col h-full md:flex-row ">
         {/* Left Section */}
         <div className="w-full h-full  md:w-1/3 bg-[#c6ecd0] border border-stone-950  flex flex-col items-center p-6 pt-10 space-y-6 ">
         <div className="w-full flex justify-end items-center md:hidden">
