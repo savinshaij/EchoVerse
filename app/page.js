@@ -358,7 +358,7 @@ export default function Home() {
                   className="h-96 py-10"
                 />
                 <p className="text-gray-600 w-full text-xl text-center">
-                  No posts yet. Add a post!
+                  No posts yet. Add a post
                 </p>
               </>
             )}

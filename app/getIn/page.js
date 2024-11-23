@@ -43,7 +43,7 @@ export default function LoginPage() {
         <h1 className="text-8xl px-7 font-bold mb-4">Welcome to EchoVerse</h1>
         <p className="text-lg px-8">
           EchoVerse is the ultimate platform to connect share and inspire. Join
-          our growing community where ideas and creativity thrive. Let&apos;s make
+          our growing community where ideas and creativity thrive.Make
           connections that matter.
         </p>
       </div>
@@ -132,7 +132,7 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-[#181918] border-2 border-black hover:text-black text-white py-2 rounded-md hover:bg-white transition"
             >
-              Let's Go
+              Let&lsquo;s Go
             </button>
           </form>
         </div>
