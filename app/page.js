@@ -309,6 +309,7 @@ const {audioPath}= convertVideoToAudio(formData);
                   key={index}
                   className="bg-white border-2 border-[#181918] p-6 w-full max-w-sm rounded-lg shadow-md"
                 >
+                  <h3 className="text-2xl font-bold mb-6 ">{userName}</h3>
                   {/* Video Player */}
                   <div className="relative">
                     <video
