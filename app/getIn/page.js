@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <div className="h-screen flex">
       {/* Left Section (50%) */}
-      <div className="w-1/2 bg-[#181918] flex flex-col justify-center text-white p-6">
+      <div className="w-1/2 bg-[#181918] hidden md:flex flex-col justify-center  text-white p-6">
         <h1 className="text-8xl px-7 font-bold mb-4">Welcome to EchoVerse</h1>
         <p className="text-lg px-8">
           EchoVerse is the ultimate platform to connect share and inspire. Join
