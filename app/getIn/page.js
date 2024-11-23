@@ -49,7 +49,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right Section (50%) */}
-      <div className="w-1/2  bg-[#dee9e1] flex items-center justify-center bg-gra">
+      <div className="md:w-1/2 w-full  bg-[#dee9e1] flex items-center justify-center bg-gra">
         <div className="w-full max-w-md bg-[#dee9e1] border-4 border-black p-6 rounded-xl shadow-lg">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Create an Account
