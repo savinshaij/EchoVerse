@@ -71,17 +71,7 @@ export default function Home() {
     formData.append("file", file);
     setPosts([newPost, ...posts]);
     try {
-      // Extract audio from the uploaded video
-      // const response = await fetch("/api/extractAudio", {
-      //   method: "POST",
-      //   body: formData,
-      // });
-
-      // if (!response.ok) {
-      //   throw new Error(`Failed to extract audio: ${response.status}`);
-      // }
-
-      // const { audioPath } = await response.json();
+     
 const {audioPath}= convertVideoToAudio(formData);
       // Now send the audio file for transcription
       const transcriptionFormData = new FormData();
