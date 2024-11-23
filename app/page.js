@@ -3,6 +3,8 @@
 import nlp from "compromise";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+
 
 export default function Home() {
   const router = useRouter();
@@ -70,17 +72,17 @@ export default function Home() {
     setPosts([newPost, ...posts]);
     try {
       // Extract audio from the uploaded video
-      const response = await fetch("/api/extractAudio", {
-        method: "POST",
-        body: formData,
-      });
+      // const response = await fetch("/api/extractAudio", {
+      //   method: "POST",
+      //   body: formData,
+      // });
 
-      if (!response.ok) {
-        throw new Error(`Failed to extract audio: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`Failed to extract audio: ${response.status}`);
+      // }
 
-      const { audioPath } = await response.json();
-
+      // const { audioPath } = await response.json();
+const {audioPath}= convertVideoToAudio(formData);
       // Now send the audio file for transcription
       const transcriptionFormData = new FormData();
       transcriptionFormData.append("file", file);
@@ -147,6 +149,17 @@ export default function Home() {
     );
   }
 
+
+  const convertVideoToAudio = async (videoFile) => {
+    const ffmpeg = createFFmpeg({ log: true });
+    await ffmpeg.load();
+  
+    ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
+    await ffmpeg.run('-i', 'input.mp4', 'output.mp3');
+  
+    const data = ffmpeg.FS('readFile', 'output.mp3');
+    return new Blob([data.buffer], { type: 'audio/mpeg' });
+  };
   return (
     <div className="min-h-screen">
       <div className="flex flex-col md:flex-row ">
