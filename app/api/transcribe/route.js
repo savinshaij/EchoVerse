@@ -1,6 +1,7 @@
 import { createClient } from "@deepgram/sdk";
 import { NextResponse } from 'next/server';
-const deepgramSDK = createClient(process.env.DEEPGRAM_API_KEY);
+const api = process.env.DEEPGRAM_API_KEY
+const deepgramSDK = createClient(api);
 
 
 
