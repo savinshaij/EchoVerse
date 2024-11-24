@@ -395,7 +395,7 @@ const extractProductsFromParagraph = (paragraph) => {
   const uniqueProducts = [...new Set(result)];
 
   // Remove punctuation (commas, periods, etc.) from the end of each product name
-  const cleanedProducts = uniqueProducts.map(product => product.replace(/[.,!?;]$/, ''));
+  const cleanedProducts = uniqueProducts.map(product => product.replace(/[.,!?;]$/, '')).filter(item => item.length > 3);
   console.log(cleanedProducts)
   // Return the cleaned product names as an array
   return cleanedProducts;
