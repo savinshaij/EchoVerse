@@ -3,7 +3,7 @@
 import nlp from "compromise";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+
 
 
 export default function Home() {
@@ -71,8 +71,7 @@ export default function Home() {
     formData.append("file", file);
     setPosts([newPost, ...posts]);
     try {
-
-      const { audioPath } = convertVideoToAudio(formData);
+      
       // Now send the audio file for transcription
       const transcriptionFormData = new FormData();
       transcriptionFormData.append("file", file);
@@ -140,16 +139,7 @@ export default function Home() {
   }
 
 
-  const convertVideoToAudio = async (videoFile) => {
-    const ffmpeg = createFFmpeg({ log: true });
-    await ffmpeg.load();
 
-    ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
-    await ffmpeg.run('-i', 'input.mp4', 'output.mp3');
-
-    const data = ffmpeg.FS('readFile', 'output.mp3');
-    return new Blob([data.buffer], { type: 'audio/mpeg' });
-  };
   return (
     <div className="h-screen">
       <div className="flex  flex-col  md:h-full md:flex-row ">
@@ -377,44 +367,29 @@ export default function Home() {
 
 
 const extractProductsFromParagraph = (paragraph) => {
-  if (!paragraph.trim()) {
-    return [];
-  }
-
-  // Preprocess the paragraph: remove all occurrences of "The" or "the" from anywhere in the paragraph
-  let normalizedParagraph = paragraph.trim();
-
-  // Remove all instances of "The" or "the" from the entire string
-  normalizedParagraph = normalizedParagraph.replace(/\b(the|The)\b/g, '');
-
-  // Use Compromise to parse the input paragraph
-  const doc = nlp(normalizedParagraph);
-
-  // Extract nouns from the paragraph
-  const nouns = doc.nouns().out('array');
-
-  // Define stop words (common words that aren't likely to be product names)
-  const stopWords = [
-    "with", "and", "in", "on", "for", "at", "by", "a", "an", "of", "as", "that", "this", "to", "from", "is", "are", "was", "it", "we", "they", "don't", "has", "have", "i", "you", "he", "she", "they", "there"
-  ];
-
-  // Filter out stop words from the noun list by converting them to lowercase
-  const filteredNouns = nouns.filter(word => !stopWords.includes(word.toLowerCase()));
-
-  // Combine consecutive capitalized nouns or numbers into multi-word product names
-  let result = [];
-  for (let i = 0; i < filteredNouns.length; i++) {
-    // Check if the current word contains at least one capital letter
-    if (/[A-Z]/.test(filteredNouns[i])) {
-      // Check if the next word also contains a capital letter, indicating a multi-word product name
-      if (i + 1 < filteredNouns.length && /[A-Z]/.test(filteredNouns[i + 1])) {
-        result.push(`${filteredNouns[i]} ${filteredNouns[i + 1]}`);
-        i++; // Skip the next word as it's already combined
-      } else {
-        result.push(filteredNouns[i]);
-      }
-    }
-  }
+  
+    const articles = ["a", "an", "the","The","A","An","This","this","that","That",",","It","it"]; // Correct variable name
+    const doc = nlp(paragraph);
+  
+    // Extract all pronouns from the input text
+    const pronouns = doc.pronouns().out('array');
+  
+    // Extract all nouns from the input text
+    const extractedNouns = doc.nouns().out('text')
+   
+    // Remove pronouns from the list of nouns
+    const nounsWithoutPronouns = extractedNouns.split(' ').filter(word => !pronouns.includes(word.toLowerCase())).filter(word => !articles.includes(word.toLowerCase())).filter(str => /[A-Z0-9]/.test(str) || str.length === 1).join(' ');
+  //  const result = nlp(nounsWithoutPronouns);
+  // .filter(str => /[A-Z]/.test(str))
+  const docs = nlp(nounsWithoutPronouns);
+  const result = docs.nouns().out('array');
+    // Remove articles from the nouns
+    // const nounsWithoutArticles = nounsWithoutPronouns.filter(noun => !articles.includes(noun));
+  
+    // Set the filtered nouns
+  //   setNouns(result);
+  //  console.log(result);
+  
 
   // Remove duplicates and finalize the product list
   const uniqueProducts = [...new Set(result)];
